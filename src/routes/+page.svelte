@@ -141,8 +141,8 @@
 	<div
 		class="flex h-full flex-col items-center justify-center gap-y-6 text-center text-2xl font-black"
 	>
-		<a href="https://treasury.vostro.my.id" class="duration-200 hover:text-3xl hover:text-zinc-500"
-			>Treasury (WIP)</a
+		<a href="https://docs.google.com/spreadsheets/d/1nncaRlYOulk9R158OyyqIvNHwNO7sQmDl_xpnRK7gVc/edit?usp=sharing" class="duration-200 hover:text-3xl hover:text-zinc-500"
+			>Treasury Spreadsheet</a
 		>
 		<a
 			href="https://drive.google.com/file/d/1iLih0vA7ohqIrwDx13f3QOaZh-hn-ZHZ/view?usp=sharing"
