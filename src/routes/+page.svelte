@@ -1,5 +1,6 @@
 <script>
     import { DateTime } from "luxon";
+    DateTime.local({zone: 'Asia/Jakarta'})
 	var schedule = {
 		className: 'X-3',
 		school: 'Sekolah Citra Kasih Don Bosco Pondok Indah',
