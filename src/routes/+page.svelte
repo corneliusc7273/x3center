@@ -147,7 +147,7 @@
 </div>
 <div class="flex h-full flex-col">
 	<div class="bg-green-300 p-1 px-3 flex">
-		<h1 class="text-green-900 font-black">X-3 Dashboard</h1>
+		<h1 class="text-green-900 font-black text-center w-full">X-3 Dashboard</h1>
 	</div>
 	<div
 		class="flex h-full flex-col items-center justify-center gap-y-6 text-center text-2xl font-black"
