@@ -133,19 +133,8 @@
         "Dismissal": "text-gray-400"
     }
 </script>
-<div class="ml-auto flex gap-y-1 text-zinc-500 text-sm absolute top-10 left-3 flex-col">
-    <h3 class="font-bold">Today's schedule ({day})</h3>
-    {#each schedule.schedule[day] as subject}
-        <p class="font-medium {colors[subject.subject]}"><span class="text-zinc-800 font-semibold">({subject.time})</span> {subject.subject} </p>
-    {/each}
-</div>
-<div class="ml-auto flex gap-y-1 text-zinc-500 text-sm absolute top-10 right-3 flex-col text-right">
-    <h3 class="font-bold">Tommorow's schedule ({tommorow})</h3>
-    {#each schedule.schedule[tommorow] as subject}
-        <p class="font-medium {colors[subject.subject]}">{subject.subject} <span class="text-zinc-800 font-semibold">({subject.time})</span></p>
-    {/each}
-</div>
-<div class="flex h-full flex-col">
+
+<div class="flex h-[60%] md:h-full flex-col">
 	<div class="bg-green-300 p-1 px-3 flex">
 		<h1 class="text-green-900 font-black text-center w-full">X-3 Dashboard</h1>
 	</div>
@@ -162,6 +151,20 @@
 	</div>
 </div>
 
+<div class="p-2 md:p-0">
+    <div class="ml-auto flex gap-y-1 text-zinc-500 text-xs md:text-sm md:absolute top-10 left-3 flex-col">
+        <h3 class="font-bold">Today's schedule ({day})</h3>
+        {#each schedule.schedule[day] as subject}
+            <p class="font-medium {colors[subject.subject]}"><span class="text-zinc-800 font-semibold">({subject.time})</span> {subject.subject} </p>
+        {/each}
+    </div>
+    <div class="ml-auto flex gap-y-1 text-zinc-500 text-xs md:text-sm md:absolute top-10 right-3 flex-col mt-8 md:mt-0 md:text-right">
+        <h3 class="font-bold">Tommorow's schedule ({tommorow})</h3>
+        {#each schedule.schedule[tommorow] as subject}
+            <p class="font-medium {colors[subject.subject]}"><span class="md:inline hidden">{subject.subject}</span> <span class="text-zinc-800 font-semibold">({subject.time})</span><span class="md:hidden inline ml-1"> {subject.subject}</span></p>
+        {/each}
+    </div>
+</div>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 	* {
