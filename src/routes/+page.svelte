@@ -135,7 +135,7 @@
 <div class="ml-auto flex gap-y-1 text-zinc-500 text-sm absolute top-10 left-3 flex-col">
     <h3 class="font-bold">Today's schedule ({day})</h3>
     {#each schedule.schedule[day] as subject}
-        <p class="font-medium {colors[subject.subject]}">{subject.subject} <span class="text-zinc-800 font-semibold">({subject.time})</span></p>
+        <p class="font-medium {colors[subject.subject]}"><span class="text-zinc-800 font-semibold">({subject.time})</span> {subject.subject} </p>
     {/each}
 </div>
 <div class="ml-auto flex gap-y-1 text-zinc-500 text-sm absolute top-10 right-3 flex-col text-right">
