@@ -1,6 +1,14 @@
 <script>
-    import { DateTime } from "luxon";
+    import { DateTime, Interval } from "luxon";
     DateTime.local({zone: 'Asia/Jakarta'})
+	var tipVisible = $state(true);
+	function parseTeacher(s) {
+		if (s.length > 0) {
+			return "with " + s;
+		}else{
+			return s;
+		}
+	}
 	var schedule = {
 		className: 'X-3',
 		school: 'Sekolah Citra Kasih Don Bosco Pondok Indah',
@@ -69,7 +77,7 @@
 				{ time: '12:55-13:35', period: 8, subject: 'Bahasa Indonesia', teacher: 'Ms. Angelina' },
 				{ time: '13:35-14:15', period: 9, subject: 'Bahasa Indonesia', teacher: 'Ms. Angelina' },
 				{ time: '14:15-14:55', period: 10, subject: 'PPals', teacher: 'Mentor' },
-				{ time: '14:55-15:35', period: 11, subject: 'PPals', teacher: 'Mentor' }
+				{ time: '14:55-15:35', period: 11, subject: 'PPals', teacher: 'Mentor' },
 			],
 			Thursday: [
 				{ time: '07:00-07:15', period: 0, subject: 'Morning Devotion', teacher: '' },
@@ -130,43 +138,77 @@
         "FUTURE GATE": "text-blue-700",
         "Break": "text-gray-400",
         "Lunch Break": "text-gray-400",
-        "Dismissal": "text-gray-400"
+        "Dismissal": "text-gray-400",
+		"Test": "text-orange-400"
     }
-</script>
 
+	function parseScheduleTime(s){
+		const scheduleTime = DateTime.now().set({
+			hour: parseInt(s.split(":")[0]),
+			minute: parseInt(s.split(":")[1])
+		})
+		return scheduleTime;
+	}
+
+	function isInBetween(start, end) {
+		var interval = Interval.fromDateTimes(start, end);
+		return interval.contains(DateTime.now());
+	}
+</script>
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+{#if tipVisible}
+	<div class="lg:block hidden absolute bottom-3 left-3 cursor-pointer hover:opacity-75 opacity-100 duration-200" onclick={() => tipVisible = false}>
+		<p class="font-semibold bg-blue-600 text-zinc-100 px-2 py-1 rounded-lg border-b-2 border-blue-800">Tip: <span class="font-normal">Hover above subjects to see the teachers.</span> <i class="bi bi-x-lg"></i></p>
+	</div>
+{/if}
 <div class="flex h-[60%] md:h-full flex-col">
-	<div class="bg-green-300 p-1 px-3 flex">
-		<h1 class="text-green-900 font-black text-center w-full">X-3 Dashboard</h1>
+	<div class="bg-blue-600 p-1 px-3 flex border-b-2 border-blue-800">
+		<h1 class="text-blue-100 font-black text-center w-full">X-3 Dashboard</h1>
 	</div>
 	<div
 		class="flex h-full flex-col items-center justify-center gap-y-6 text-center text-2xl font-black"
 	>
-		<a href="https://docs.google.com/spreadsheets/d/1nncaRlYOulk9R158OyyqIvNHwNO7sQmDl_xpnRK7gVc/edit?usp=sharing" class="duration-200 hover:text-3xl hover:text-zinc-500"
+		<a href="https://docs.google.com/spreadsheets/d/1nncaRlYOulk9R158OyyqIvNHwNO7sQmDl_xpnRK7gVc/edit?usp=sharing" class="duration-200 hover:text-3xl hover:text-zinc-500 border-b-2 border-green-400"
 			>Treasury Spreadsheet</a
 		>
 		<a
 			href="https://drive.google.com/file/d/1iLih0vA7ohqIrwDx13f3QOaZh-hn-ZHZ/view?usp=sharing"
-			class="duration-200 hover:text-3xl hover:text-zinc-500">Weekly Agenda</a
+			class="duration-200 hover:text-3xl hover:text-zinc-500 border-b-2 border-orange-400">Weekly Agenda</a
 		>
 	</div>
 </div>
 
-<div class="p-2 md:p-0">
-    <div class="ml-auto flex gap-y-1 text-zinc-500 text-sm md:absolute top-10 left-3 flex-col">
-        <h3 class="font-bold">Today's schedule ({day})</h3>
+<div class="p-4 md:p-0">
+    <div class="ml-auto flex gap-y-1 text-zinc-500 text-sm md:absolute top-12 left-5 flex-col">
+        <h3 class="font-bold text-zinc-800">Today's schedule ({day})</h3>
         {#each schedule.schedule[day] as subject}
-            <p class="font-medium {colors[subject.subject]}"><span class="text-zinc-800 font-semibold">({subject.time})</span> {subject.subject} </p>
+			{#if isInBetween(parseScheduleTime(subject.time.split("-")[0]),
+			parseScheduleTime(subject.time.split("-")[1])
+		)}
+				<div class="group cursor-pointer">
+					
+					<p class="font-medium ml-3 text-orange-400">🡪 <span class="text-zinc-900 font-semibold {colors[subject.subject]}">({subject.time})</span> {subject.subject} <span class="font-black text-zinc-800 group-hover:opacity-100 opacity-0 duration-200 md:inline hidden">{parseTeacher(subject.teacher)}</span></p>
+				</div>
+			{:else}
+			<div class="group cursor-pointer">
+				<p class="font-medium opacity-90 text-zinc-950 group-hover:text-blue-700">
+				<span class="{colors[subject.subject]}">•</span>
+					<span class="text-zinc-500 font-semibold">({subject.time})</span> {subject.subject} <span class="font-black text-zinc-800 group-hover:opacity-100 opacity-0 duration-200 md:inline hidden">{parseTeacher(subject.teacher)}</span></p>
+				</div>
+			{/if}
         {/each}
     </div>
-    <div class="ml-auto flex gap-y-1 text-zinc-500 text-sm md:absolute top-10 right-3 flex-col mt-8 md:mt-0 md:text-right">
-        <h3 class="font-bold">Tommorow's schedule ({tommorow})</h3>
+    <div class="ml-auto flex gap-y-1 text-zinc-500 text-sm md:absolute top-12 right-5 flex-col mt-8 md:mt-0 md:text-right">
+        <h3 class="font-bold text-zinc-800">Tomorrow's schedule ({tommorow})</h3>
         {#each schedule.schedule[tommorow] as subject}
-            <p class="font-medium {colors[subject.subject]}"><span class="md:inline hidden">{subject.subject}</span> <span class="text-zinc-800 font-semibold">({subject.time})</span><span class="md:hidden inline ml-1"> {subject.subject}</span></p>
+            <p class="font-medium text-zinc-900"><span class="{colors[subject.subject]} md:hidden inline">•</span><span class="md:inline hidden">{subject.subject}</span> <span class="text-zinc-500 font-semibold">({subject.time})</span><span class="md:hidden inline ml-1"> {subject.subject}</span><span class="{colors[subject.subject]} md:inline hidden ml-1">•</span></p>
         {/each}
     </div>
 </div>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+	@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
 	* {
 		font-family: Quicksand;
 	}
