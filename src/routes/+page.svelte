@@ -1,11 +1,11 @@
 <script>
-    import { DateTime, Interval } from "luxon";
-    DateTime.local({zone: 'Asia/Jakarta'})
+	import { DateTime, Interval } from 'luxon';
+	DateTime.local({ zone: 'Asia/Jakarta' });
 	var tipVisible = $state(true);
 	function parseTeacher(s) {
 		if (s.length > 0) {
-			return "with " + s;
-		}else{
+			return 'with ' + s;
+		} else {
 			return s;
 		}
 	}
@@ -77,7 +77,7 @@
 				{ time: '12:55-13:35', period: 8, subject: 'Bahasa Indonesia', teacher: 'Ms. Angelina' },
 				{ time: '13:35-14:15', period: 9, subject: 'Bahasa Indonesia', teacher: 'Ms. Angelina' },
 				{ time: '14:15-14:55', period: 10, subject: 'PPals', teacher: 'Mentor' },
-				{ time: '14:55-15:35', period: 11, subject: 'PPals', teacher: 'Mentor' },
+				{ time: '14:55-15:35', period: 11, subject: 'PPals', teacher: 'Mentor' }
 			],
 			Thursday: [
 				{ time: '07:00-07:15', period: 0, subject: 'Morning Devotion', teacher: '' },
@@ -110,43 +110,43 @@
 			]
 		}
 	};
-    var dt = DateTime.now();
-    var day = $state(dt.toLocaleString({weekday: 'long'}));
-    var tommorow = $state(dt.plus({days: 1}).toLocaleString({weekday: 'long'}));
-    var colors = {
-        "Morning Devotion": "text-purple-600",
-        "ICTC / BK": "text-sky-600",
-        "Bahasa Inggris": "text-amber-600",
-        "Bahasa Indonesia": "text-yellow-600",
-        "Mandarin": "text-orange-600",
-        "Matematika": "text-blue-600",
-        "Biologi": "text-emerald-600",
-        "Fisika": "text-cyan-600",
-        "Kimia": "text-teal-600",
-        "Ekonomi": "text-lime-600",
-        "Geografi": "text-green-600",
-        "Sejarah": "text-stone-600",
-        "Sosiologi": "text-rose-600",
-        "Pendidikan Agama": "text-violet-600",
-        "Pendidikan Pancasila": "text-red-600",
-        "Penjasorkes": "text-indigo-600",
-        "Seni Budaya": "text-fuchsia-600",
-        "Informatika": "text-indigo-600",
-        "PoE": "text-pink-600",
-        "PPals": "text-purple-600",
-        "CT Time / Fellowship": "text-indigo-600",
-        "FUTURE GATE": "text-blue-700",
-        "Break": "text-gray-400",
-        "Lunch Break": "text-gray-400",
-        "Dismissal": "text-gray-400",
-		"Test": "text-orange-400"
-    }
+	var dt = DateTime.now();
+	var day = $state(dt.toLocaleString({ weekday: 'long' }));
+	var tommorow = $state(dt.plus({ days: 1 }).toLocaleString({ weekday: 'long' }));
+	var colors = {
+		'Morning Devotion': 'text-purple-600',
+		'ICTC / BK': 'text-sky-600',
+		'Bahasa Inggris': 'text-amber-600',
+		'Bahasa Indonesia': 'text-yellow-600',
+		Mandarin: 'text-orange-600',
+		Matematika: 'text-blue-600',
+		Biologi: 'text-emerald-600',
+		Fisika: 'text-cyan-600',
+		Kimia: 'text-teal-600',
+		Ekonomi: 'text-lime-600',
+		Geografi: 'text-green-600',
+		Sejarah: 'text-stone-600',
+		Sosiologi: 'text-rose-600',
+		'Pendidikan Agama': 'text-violet-600',
+		'Pendidikan Pancasila': 'text-red-600',
+		Penjasorkes: 'text-indigo-600',
+		'Seni Budaya': 'text-fuchsia-600',
+		Informatika: 'text-indigo-600',
+		PoE: 'text-pink-600',
+		PPals: 'text-purple-600',
+		'CT Time / Fellowship': 'text-indigo-600',
+		'FUTURE GATE': 'text-blue-700',
+		Break: 'text-gray-400',
+		'Lunch Break': 'text-gray-400',
+		Dismissal: 'text-gray-400',
+		Test: 'text-orange-400'
+	};
 
-	function parseScheduleTime(s){
+	function parseScheduleTime(s) {
 		const scheduleTime = DateTime.now().set({
-			hour: parseInt(s.split(":")[0]),
-			minute: parseInt(s.split(":")[1])
-		})
+			hour: parseInt(s.split(':')[0]),
+			minute: parseInt(s.split(':')[1])
+		});
 		return scheduleTime;
 	}
 
@@ -155,60 +155,98 @@
 		return interval.contains(DateTime.now());
 	}
 </script>
+
+<head>
+	<link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+</head>
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 {#if tipVisible}
-	<div class="lg:block hidden absolute bottom-3 left-3 cursor-pointer hover:opacity-75 opacity-100 duration-200" onclick={() => tipVisible = false}>
-		<p class="font-semibold bg-blue-600 text-zinc-100 px-2 py-1 rounded-lg border-b-2 border-blue-800">Tip: <span class="font-normal">Hover above subjects to see the teachers.</span> <i class="bi bi-x-lg"></i></p>
+	<div
+		class="absolute bottom-3 left-3 hidden cursor-pointer opacity-100 duration-200 hover:opacity-75 lg:block"
+		onclick={() => (tipVisible = false)}
+	>
+		<p
+			class="rounded-lg border-b-2 border-blue-800 bg-blue-600 px-2 py-1 font-semibold text-zinc-100"
+		>
+			Tip: <span class="font-normal">Hover above subjects to see the teachers.</span>
+			<i class="bi bi-x-lg"></i>
+		</p>
 	</div>
 {/if}
-<div class="flex h-[60%] md:h-full flex-col">
-	<div class="bg-blue-600 p-1 px-3 flex border-b-2 border-blue-800">
-		<h1 class="text-blue-100 font-black text-center w-full">X-3 Dashboard</h1>
+<div class="flex h-[60%] flex-col md:h-full">
+	<div class="flex border-b-2 border-blue-800 bg-blue-600 p-1 px-3">
+		<h1 class="w-full text-center font-black text-blue-100">X-3 Dashboard</h1>
 	</div>
 	<div
 		class="flex h-full flex-col items-center justify-center gap-y-6 text-center text-2xl font-black"
 	>
-		<a href="https://docs.google.com/spreadsheets/d/1nncaRlYOulk9R158OyyqIvNHwNO7sQmDl_xpnRK7gVc/edit?usp=sharing" class="duration-200 hover:text-3xl hover:text-zinc-500 border-b-2 border-green-400"
+		<a
+			href="https://docs.google.com/spreadsheets/d/1nncaRlYOulk9R158OyyqIvNHwNO7sQmDl_xpnRK7gVc/edit?usp=sharing"
+			class="border-b-2 border-green-400 duration-200 hover:text-3xl hover:text-zinc-500"
 			>Treasury Spreadsheet</a
 		>
 		<a
 			href="https://drive.google.com/file/d/1iLih0vA7ohqIrwDx13f3QOaZh-hn-ZHZ/view?usp=sharing"
-			class="duration-200 hover:text-3xl hover:text-zinc-500 border-b-2 border-orange-400">Weekly Agenda</a
+			class="border-b-2 border-orange-400 duration-200 hover:text-3xl hover:text-zinc-500"
+			>Weekly Agenda</a
 		>
 	</div>
 </div>
 
 <div class="p-4 md:p-0">
-    <div class="ml-auto flex gap-y-1 text-zinc-500 text-sm md:absolute top-12 left-5 flex-col">
-        <h3 class="font-bold text-zinc-800">Today's schedule ({day})</h3>
-        {#each schedule.schedule[day] as subject}
-			{#if isInBetween(parseScheduleTime(subject.time.split("-")[0]),
-			parseScheduleTime(subject.time.split("-")[1])
-		)}
+	<div class="top-12 left-5 ml-auto flex flex-col gap-y-1 text-sm text-zinc-500 md:absolute">
+		<h3 class="font-bold text-zinc-800">Today's schedule ({day})</h3>
+		{#each schedule.schedule[day] as subject}
+			{#if isInBetween(parseScheduleTime(subject.time.split('-')[0]), parseScheduleTime(subject.time.split('-')[1]))}
 				<div class="group cursor-pointer">
-					
-					<p class="font-medium ml-3 text-orange-400">🡪 <span class="text-zinc-900 font-semibold {colors[subject.subject]}">({subject.time})</span> {subject.subject} <span class="font-black text-zinc-800 group-hover:opacity-100 opacity-0 duration-200 md:inline hidden">{parseTeacher(subject.teacher)}</span></p>
+					<p class="ml-3 font-medium text-orange-400">
+						🡪 <span class="font-semibold text-zinc-900 {colors[subject.subject]}"
+							>({subject.time})</span
+						>
+						{subject.subject}
+						<span
+							class="hidden font-black text-zinc-800 opacity-0 duration-200 group-hover:opacity-100 md:inline"
+							>{parseTeacher(subject.teacher)}</span
+						>
+					</p>
 				</div>
 			{:else}
-			<div class="group cursor-pointer">
-				<p class="font-medium opacity-90 text-zinc-950 group-hover:text-blue-700">
-				<span class="{colors[subject.subject]}">•</span>
-					<span class="text-zinc-500 font-semibold">({subject.time})</span> {subject.subject} <span class="font-black text-zinc-800 group-hover:opacity-100 opacity-0 duration-200 md:inline hidden">{parseTeacher(subject.teacher)}</span></p>
+				<div class="group cursor-pointer">
+					<p class="font-medium text-zinc-950 opacity-90 group-hover:text-blue-700">
+						<span class={colors[subject.subject]}>•</span>
+						<span class="font-semibold text-zinc-500">({subject.time})</span>
+						{subject.subject}
+						<span
+							class="hidden font-black text-zinc-800 opacity-0 duration-200 group-hover:opacity-100 md:inline"
+							>{parseTeacher(subject.teacher)}</span
+						>
+					</p>
 				</div>
 			{/if}
-        {/each}
-    </div>
-    <div class="ml-auto flex gap-y-1 text-zinc-500 text-sm md:absolute top-12 right-5 flex-col mt-8 md:mt-0 md:text-right">
-        <h3 class="font-bold text-zinc-800">Tomorrow's schedule ({tommorow})</h3>
-        {#each schedule.schedule[tommorow] as subject}
-            <p class="font-medium text-zinc-900"><span class="{colors[subject.subject]} md:hidden inline">•</span><span class="md:inline hidden">{subject.subject}</span> <span class="text-zinc-500 font-semibold">({subject.time})</span><span class="md:hidden inline ml-1"> {subject.subject}</span><span class="{colors[subject.subject]} md:inline hidden ml-1">•</span></p>
-        {/each}
-    </div>
+		{/each}
+	</div>
+	<div
+		class="top-12 right-5 mt-8 ml-auto flex flex-col gap-y-1 text-sm text-zinc-500 md:absolute md:mt-0 md:text-right"
+	>
+		<h3 class="font-bold text-zinc-800">Tomorrow's schedule ({tommorow})</h3>
+		{#each schedule.schedule[tommorow] as subject}
+			<p class="font-medium text-zinc-900">
+				<span class="{colors[subject.subject]} inline md:hidden">•</span><span
+					class="hidden md:inline">{subject.subject}</span
+				> <span class="font-semibold text-zinc-500">({subject.time})</span><span
+					class="ml-1 inline md:hidden"
+				>
+					{subject.subject}</span
+				><span class="{colors[subject.subject]} ml-1 hidden md:inline">•</span>
+			</p>
+		{/each}
+	</div>
 </div>
+
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
-	@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
+	@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css');
 	* {
 		font-family: Quicksand;
 	}
